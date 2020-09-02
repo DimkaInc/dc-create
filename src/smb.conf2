@@ -1,0 +1,13 @@
+
+[homes]
+	comment = Home directory
+	read only = No
+	browseable = No
+
+# Для включения сервера печтати, необходимо раскомментировать группу ниже
+#[printers]
+#	comment = All printers
+#	path = /var/spool/samba
+#	printable = Yes
+#	print ok = Yes
+#	browsable = No

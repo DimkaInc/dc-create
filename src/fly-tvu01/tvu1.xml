@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE greeter SYSTEM "greeter.dtd">
+<!--
+Blue Linux KDM Theme 0.2
+Copyright (c) 2020 Dmitry Doryshin <dimkainc@mail.ru>
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+===========
+Changelog:
+	2020: Release for Tervetupravlenie #1 by Dmitry Dobryshin <dimkainc@mail.ru>
+	- Rewrote the xml file because of compatibility issues with KDM 4.1
+	- Who author of picture I dont known
+	- Used Fonts: Noto Sans
+-->
+<greeter id="theme">
+	<!-- Фоновый рисунок  -->
+	<style font="Segoe Semibold 11" window-text-color="#bbbbbb" text-color="#000000" disabled-text-color="#808080"/>
+	<item type="pixmap" id="background" background="true">
+	<normal file="tvu1.png"/>
+	<pos anchor="c" x="60%" y="50%" width="100%" height="100%"/>
+	</item>
+	<!-- Отчерченное слева поле для авторизации -->
+	<item type="rect">
+		<pos ancor="nw" x="0" y="0" width="40%" height="100%" />
+		<fixed><!-- Поле -->
+			<item type="pixmap">
+				<normal file="tvu1-bg.png"/>
+				<pos width="100%" height="100%" />
+			</item>
+			<!-- Название -->
+			<item type="label">
+				<pos ancor="n" x="13%" y="14%" width="74%"/>
+				<normal color="#FFFFFF" />
+				<style font="Noto Sans 36"/>
+				<text>ТЕРВЕТУПРАВЛЕНИЕ №1</text>
+			</item>
+			<!-- Время -->
+			<item type="label" id="clock" >
+				<pos x="10%" y="21%" ancor="n" width="100%" />
+				<normal color="#FFFFFF" />
+				<style font="Noto Sans 18" />
+				<text>Сегодня: %c</text>
+			</item>
+			<!-- Имя компьютера -->
+			<item type="label" >
+				<pos x="30%" y="26%" ancor="n" width="100%" />
+				<normal color="#FFFFFF" />
+				<style font="Noto Sans 18" />
+				<stock type="welcome-label" />
+			</item>
+			<!-- Кнопка языка -->
+			<item type="rect" id="xkb-layout-rect" button="true">
+				<normal color="#000000" alpha="0.4"/>
+				<pos anchor="c" x="95%" y="95%" width="box" height="box"/>
+				<box orientation="vertical" xpadding="10" ypadding="5" spacing="0">
+					<item type="label" id="xkb-layout-label">
+						<normal color="#bbbbbb" font="Noto Sans 11"/>
+						<prelight color="#dddddd" font="Noto Sans 11"/>
+						<pos x="50%" anchor="n"/>
+					</item>
+				</box>
+				<fixed>
+					<item type="label">
+						<pos ancor="ne" x="-120%" y="4" />
+						<normal color="#bbbbbb" />
+						<style font="Noto Sans 11" />
+						<stock type="language" />
+					</item>
+				</fixed>
+			</item>
+			<!-- Логин -->
+			<item type="rect" id="zamok-warning">
+				<normal color="#000000" alpha="0.4"/>
+				<pos anchor="c" x="10%" y="30%" width="box" height="box"/>
+				<box orientation="vertical" xpadding="10" ypadding="5" spacing="0">
+					<item type="label">
+						<normal color="#bbbbbb" font="Noto Sans 11"/>
+						<pos x="50%" anchor="n"/>
+						<text xml:lang="Russian">Установите ИНПИ или введите имя и пароль</text>
+						<text xml:lang="English">Insert AUM or enter login/password and press Enter</text>
+						<!--<stock type="zamok-warning"/>-->
+					</item>
+				</box>
+			</item>
+			<item type="pixmap">
+				<normal file="password.png"/>
+				<pos anchor="w" x="15%" y="38%" width="60" height="60"/>
+				<show min-screen-width="800"/>
+			</item>
+			<item type="rect" id="usr-login">
+				<normal color="#000000" alpha="0" />
+				<pos x="25%" y="35%" ancor="n" width="50%" height="35%" />
+				<fixed>
+					<item type="svg">
+						<normal file="left_2.svg" />
+						<active file="left_3.svg" />
+						<pos x="0%" y="0" height="60" ancor="ne" />
+					</item>
+					<item type="svg">
+						<normal file="user_2.svg" />
+						<active file="user_3.svg" />
+						<pos x="3%" y="5" width="4%" height="25" ancor="ne" />
+					</item>
+					<item type="svg">
+						<normal file="up_down_2.svg" />
+						<active file="up_down_3.svg" />
+						<pos x="3%" y="0" width="91%" height="60" ancor="ne" />
+					</item>
+					<item type="svg">
+						<normal file="right_2.svg" />
+						<active file="right_3.svg" />
+						<pos x="94%" y="0" height="60" ancor="ne" />
+					</item>
+					<item type="entry" id="talker">
+						<pos anchor="w" x="40" y="30" width="80%" height="box"/>
+					</item>
+					<!-- Caps-lock -->
+					<item type="rect" id="caps-lock-warning">
+						<normal color="#FFFF00" alpha="0.8"/>
+						<pos anchor="c" x="50%" y="85" width="box" height="box"/>
+						<box orientation="vertical" xpadding="10" ypadding="5" spacing="0">
+							<item type="label">
+								<normal color="#000000" font="Noto Sans 11"/>
+								<pos x="50%" anchor="n"/>
+								<stock type="caps-lock-warning"/>
+							</item>
+						</box>
+					</item>
+				</fixed>
+			</item>
+			<!-- Кнопка Войти -->
+			<item type="rect" id="login_button_rect">
+				<pos anchor="c" x="50%" y="48%" height="box" width="box"/>
+				<box orientation="horizontal" spacing="10">
+					<item type="rect" id="login_button" button="true">
+						<normal color="#FFFFFF" alpha="1.0" />
+						<prelight color="#00CA94" alpha="1.0" />
+						<pos ancor="c" x="0" y="1" width="box" height="box" />
+						<box orientation="horizontal" padding="5">
+							<item type="label" id="login_button" button="true">
+								<normal color="#000000" font="Noto Sans 12"/>
+								<prelight color="#FFFFFF" font="Noto Sans 12"/>
+								<pos x="15" width="80"/>
+								<text>Войти</text>
+							</item>
+						</box>
+					</item>
+					<item type="pixmap" id="login_button" button="true">
+						<normal file="enter_inactive.png"/>
+						<prelight file="enter.png"/>
+						<pos width="24" height="24"/>
+					</item>
+				</box>
+			</item>
+			<!-- Сообщение об ошибке -->
+			<item type="rect" id="pam-error-paceholder">
+				<pos anchor="c" x="50%" y="32%" width="box" height="box"/>
+				<box orientation="horizontal" margin="5">
+					<item type="label" id="dummy1">
+					<normal alpha="0" font="Noto Sans 12"/>
+					</item>
+					<item type="label" id="pam-error">
+					<pos anchor="c" x="50%" y="50%" expand="true"/>
+					<normal color="#FF5500" font="Noto Sans 12"/>
+					</item>
+				</box>
+			</item>
+			<!-- Кнопка виртуальной клавиатуры -->
+			<item type="rect" id="vkb-rect" button="true">
+				<pos anchor="c" x="5%" y="95%" width="box" height="box"/>
+				<box orientation="vertical" xpadding="0" ypadding="0" spacing="0">
+					<item type="pixmap" id="vkbd-btn" button="true">
+						<normal   file="keyboard_inactive.png"/>
+						<prelight file="keyboard.png"/>
+						<pos width="48" height="48"/>
+					</item>
+				</box>
+			</item>
+			<item type="rect" id="session_button" button="true">
+				<pos anchor="e" x="45%" y="95%" width="box" height="box"/>
+				<box orientation="horizontal" spacing="7">
+					<item type="label">
+						<normal color="#bbbbbb" font="Noto Sans 11"/>
+						<prelight color="#ffffff" font="Noto Sans 11"/>
+						<active color="#ff0000" font="Noto Sans 11"/>
+						<pos anchor="e" x="-0" y="50%"/>
+						<stock type="session"/>
+					</item>
+					<item type="pixmap">
+						<normal file="sessions_inactive.png"/>
+						<prelight file="sessions.png"/>
+						<pos anchor="e" x="-0" y="50%" width="48" height="48"/>
+					</item>
+				</box>
+			</item>
+			<item type="rect" id="system_button" button="true">
+				<show modes="console" type="system"/>
+				<pos anchor="e" x="25%" y="95%" width="box" height="box"/>
+				<box orientation="horizontal" spacing="7">
+					<item type="label">
+						<normal color="#bbbbbb" font="Noto Sans 11"/>
+						<prelight color="#ffffff" font="Noto Sans 11"/>
+						<active color="#ff0000" font="Noto Sans 11"/>
+						<pos anchor="e" x="-0" y="50%"/>
+						<stock type="system"/>
+					</item>
+					<item type="pixmap">
+						<normal file="system_inactive.png"/>
+						<prelight file="system.png"/>
+						<pos anchor="e" x="-0" y="50%" width="48" height="48"/>
+					</item>
+				</box>
+			</item>
+			<item type="rect" id="reboot" button="true">
+				<show modes="console" type="reboot" />
+				<pos ancor="e" x="35%" y="93%" width="box" height="box" />
+				<box orientation="horizontal" spacing="7">
+					<item type="label">
+						<normal color="#bbbbbb" font="Noto Sans 11" />
+						<prelight color="#ffffff" font="Noto Sans 11" />
+						<active color="#ff0000" font="Noto Sans 11" />
+						<pos ancor="e" x="-0" y="50%"/>
+						<stock type="reboot" />
+					</item>
+				</box>
+			</item>
+			<item type="rect" id="halt" button="true">
+				<show modes="console" type="halt" />
+				<pos ancor="e" x="42%" y="93%" width="box" height="box" />
+				<box orientation="horizontal" spacing="7">
+					<item type="label">
+						<normal color="#bbbbbb" font="Noto Sans 11" />
+						<prelight color="#ffffff" font="Noto Sans 11" />
+						<active color="#ff0000" font="Noto Sans 11" />
+						<pos ancor="e" x="-0" y="50%"/>
+						<stock type="halt" />
+					</item>
+				</box>
+			</item>
+			<item type="pixmap">
+				<normal file="environment.png"/>
+				<pos anchor="c" x="50%" y="50%" width="186" height="100"/>
+			</item>
+		</fixed>
+	</item>
+</greeter>

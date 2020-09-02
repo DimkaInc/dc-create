@@ -1,0 +1,13 @@
+# Apparently this is not really a .desktop file like the rest, but it's useful
+# to treat it as such
+
+[KdmGreeterTheme]
+Encoding=UTF-8
+Greeter=tvu1.xml
+Name=Tervetupravlenie №1
+Name[ru]=Терветуправление №1
+Description=Fly DM flat theme based on Blue-Linux
+Description[ru]=Плоская тема для графического входа Fly
+Author=original D.Dobryshin (d.dobrishin@tervetmo01.loc)
+Copyright=
+Screenshot=screenshot.png

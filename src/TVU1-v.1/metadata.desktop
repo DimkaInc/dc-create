@@ -1,0 +1,13 @@
+[SddmGreeterTheme]
+Name=TVU1-v.1
+Description=TVU1-v.1
+Author=-+= Dimka Inc =+-
+License=GPLv.3
+Type=sddm-theme
+Version=1.0
+Screenshot=preview.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=translations
+Email=dimkainc@gmail.com
+Theme-Id=TVU1

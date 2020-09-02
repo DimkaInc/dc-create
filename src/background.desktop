@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[ru_RU]=
+Comment=
+Exec=/bin/bash /usr/share/scripts/chwall.sh
+GenericName[ru_RU]=
+GenericName=
+Icon=preferences-desktop-display-color
+MimeType=
+Name[ru_RU]=\xd0\xa1\xd0\xbc\xd0\xb5\xd0\xbd\xd0\xb0 \xd1\x84\xd0\xbe\xd0\xbd\xd0\xb0
+Name=Change wallpaper
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
