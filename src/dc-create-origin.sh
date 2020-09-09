@@ -35,6 +35,12 @@ VPNUSR="vpnuser"
 # пароль
 VPNPWD="Password"
 
+# Дополнительное программное обеспечение
+# Программа удалённого доступа
+ANYDESK="no"
+# Программа показа информации о компьютере
+CONKY="no"
+
 # ================================================
 #
 # Функция опроса пользователя с ответом y/n
@@ -908,6 +914,7 @@ mainProc() {
             mkdir -p /usr/share/fly-dm/themes/fly-tvu01 2>&1
             tar -C /usr/share/fly-dm/themes/ -xzvf fly-tvu01.tar.gz > /dev/null
             sed -i "s/\(^Theme=\).*/\1\/usr\/share\/fly-dm\/themes\/fly-tvu01/" /etc/X11/fly-dm/fly-dmrc
+            mkdir -p /usr/share/scripts
             extractLines "^## \/usr\/share\/scripts\/chwall_astra\.sh" $1
             echo -e "${cRes}" > /usr/share/scripts/chwall.sh
             chmod 0755 /usr/share/scripts/chwall.sh
@@ -968,6 +975,18 @@ mainProc() {
         # https://download.geo.drweb.com/pub/drweb/unix/workstation/11.1/drweb-11.1.1-av-linux-amd64.run   30 дней пробная на десктоп.
         wget https://download.geo.drweb.com/pub/drweb/unix/workstation/11.1/drweb-11.1.1-av-linux-amd64.run
         bash drweb-11.1.1-av-linux-amd64.run
+    }
+
+    # Функция установки программы удалённого доступа
+    doAnydeskInstall() {
+        wget https://download.anydesk.com/linux/anydesk_6.0.1-1_amd64.deb
+        dpkg -i anydesk_6.0.1-1_amd64.deb
+    }
+
+    # Функция установки программы отображения на рабочем столе информации о компьютере
+    doConkyInstall() {
+        apt-get -y install conky-all
+        
     }
 
     # Функция извлечения файлов заставки
@@ -1034,6 +1053,10 @@ ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInf
         local VPNUSR=`awk -F "=" '/^VPNUSR/{print $2}' $1 | sed 's/^"\(.*\)"$/\1/'`
         local VPNPWD=`awk -F "=" '/^VPNPWD/{print $2}' $1 | sed 's/^"\(.*\)"$/\1/'`
         local AUTODHCP=`awk -F "=" '/^AUTODHCP/{print $2}' $1 | sed 's/^"\(.*\)"$/\1/'`
+        local ANYDESK=`awk -F "=" '/^ANYDESK/{print $2}' $1 | sed 's/^"\(.*\)"$/\1/'`
+        local ANYDESK="${ANYDESK,,}"
+        local CONKY=`awk -F "=" '/^CONKY/{print $2}' $1 | sed 's/^"\(.*\)"$/\1/'`
+        local CONKY="${CONKY,,}"
         local LINUXNAME=`lsb_release -a | grep "Description" | sed -e 's/^.*:[\ *\t*]\([0-9a-zA-Z\ ]*\).*/\1/' | rev | sed -e 's/^[\ 0-9]*\(.*$\)/\1/' | rev`
         if [ "$AUTODHCP" == "" ] ; then
             local AUTODHCP="no"
@@ -1138,6 +1161,12 @@ ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInf
             doWallpaperDebian $@     # Установка фона на рабочий стол пользователей
             doGrubWallpaper $@       # Установка фона загрузчику
             doDefenderInstall        # Установка Ативируса
+            if [ "$ANYDESK" == "yes" ] ; then
+                doAnydeskInstall     # Установка программы удалённого доступа
+            fi
+            if [ "$CONKY" == "yes" ] ; then
+                doConkyInstall        # Установка программы отображения на рабчем столе информации о компьютере
+            fi
             doLastCheck              # Окончательная проверка
 
         fi
@@ -1185,6 +1214,12 @@ ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInf
             doWallpaperAstra $@       # Установка фона на рабочий стол пользователей
             doGrubWallpaper $@        # Установка фона загрузчику
             doDefenderInstall         # Установка Ативируса
+            if [ "$ANYDESK" == "yes" ] ; then
+                doAnydeskInstall      # Установка программы удалённого доступа
+            fi
+            if [ "$CONKY" == "yes" ] ; then
+                doConkyInstall        # Установка программы отображения на рабчем столе информации о компьютере
+            fi
             doLastCheck               # Окончательная проверка
         fi
     fi

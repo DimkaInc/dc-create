@@ -7,7 +7,9 @@ FILE="../release/dc-create.sh"
 
 cd src
 # Подговка каталогов для заливки в файл
-tar -czvf GVSMO_Zastavka.tar.gz GVSMO_Zastavka
+cd GVSMO_Zastavka
+tar -czvf ../GVSMO_Zastavka.tar.gz *
+cd ..
 tar -czvf TVU1-v.1.tar.gz TVU1-v.1
 tar -czvf fly-tvu01.tar.gz fly-tvu01
 
