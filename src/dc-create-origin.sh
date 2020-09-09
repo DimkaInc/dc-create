@@ -281,7 +281,7 @@ mainProc() {
         # Настройка сетевого интерфейса через NetworkManager
         # --------------------------------------------------
         local AUTODHCP="${AUTODHCP,,}"
-        if [[ "$AUTODHCP" =~ ^(yes|no)$ ]]; then
+        if [[ "$AUTODHCP" =~ ^(yes|no)$ ]] ; then
             echo -e "${cInfo}Настройка сетевого подключения${cNormal}"
         else
             echo -e "${cInfo}AUTODHCP${cNormal} принимает значения ${cRed}yes${cInfo} или ${cRed}no${cNormal}"
@@ -387,7 +387,7 @@ mainProc() {
         echo -e "${cInfo}Скачивание дистрибутива BIND9${cNormal}"
         # =======================================================
         # На момент написания данного скрипта, существовала стабильная версия 9.14.7, но устанавливалась 9.11.5
-        if [[ ! -f "./bind-9.11.5.tar.gz" ]]; then
+        if [[ ! -f "./bind-9.11.5.tar.gz" ]] ; then
             wget https://downloads.isc.org/isc/bind9/9.11.5/bind-9.11.5.tar.gz
         fi
         echo -e "${cInfo}Распаковка архива с исходными файлами${cNormal}"
@@ -395,17 +395,17 @@ mainProc() {
         cd bind-9.11.5
         echo -e "${cInfo}Подготовка к сборке. установка необходимых пакетов${cNormal}"
         sudo apt-get -y install make gcc python3 python3-ply openssl libssl-dev libxml2 libxml2-dev linux-headers-$(uname-r) libcap-dev libkrb5-dev libldap2-dev libz-dev zlib1g-dev
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         ./configure --with-gssapi=/usr/include/gssapi --with-dlopen=yes --with-dlz-ldap --with-dlz-filesystem=yes --with-zlib
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         make
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
@@ -420,7 +420,7 @@ mainProc() {
         for PACKAGE in $PACKAGES
         do
             apt-get -y install $PACKAGE
-            if [ $? -ne 0 ]; then
+            if [ $? -ne 0 ] ; then
                 echo -e "${cRed}Произошла ошибка при установке ${cBlue}${PACKAGE}${cNormal}"
                 exit 1
             fi
@@ -502,7 +502,7 @@ mainProc() {
         for SUBPATH in $SUBPATHS
         do
             CONFIG=$(sudo smbd -b | egrep "$SUBPATH" | cut -d ":" -f 2)
-            if [[ "$CONFIG" != "" ]]; then
+            if [[ "$CONFIG" != "" ]] ; then
                 if ls ${CONFIG}/*.tdb 1> /dev/null 2>&1; then
                     rm ${CONFIG}/*.tdb
                 fi
@@ -512,7 +512,7 @@ mainProc() {
             fi
         done
         echo -e "${cInfo}Удаление существующего файла ${cBlue}/etc/krb5.conf${cNormal}"
-        if [[ -f "/etc/krb5.conf" ]]; then
+        if [[ -f "/etc/krb5.conf" ]] ; then
             rm /etc/krb5.conf
         fi
     }
@@ -541,7 +541,7 @@ mainProc() {
             for SUBPATH in $SUBPATHS
             do
                 CONFIG=$(sudo smbd -b | egrep "$SUBPATH" | cut -d ":" -f 2)
-                if [[ "$CONFIG" != "" ]]; then
+                if [[ "$CONFIG" != "" ]] ; then
                     if ls ${CONFIG}/*.tdb 1> /dev/null 2>&1; then
                         rm ${CONFIG}/*.tdb
                     fi
@@ -551,7 +551,7 @@ mainProc() {
                 fi
             done
             echo -e "${cInfo}Удаление существующего файла ${cBlue}/etc/krb5.conf${cNormal}"
-            if [[ -f "/etc/krb5.conf" ]]; then
+            if [[ -f "/etc/krb5.conf" ]] ; then
                 rm /etc/krb5.conf
             fi
         fi
@@ -611,13 +611,13 @@ mainProc() {
     doDomainConfigure() {
         # named.conf
         echo -e "${cInfo}Настройка файла ${cBlue}/etc/bind/named.conf\n${cInfo}Добавление пути к файлу настроек зоны Samba:\n${cText}include \"/var/lib/samba/private/named.conf\";${cNormal}"
-        if [[ $(grep "include \"/var/lib/samba/private/named.conf\";" /etc/bind/named.conf) = "" ]]; then
+        if [[ $(grep "include \"/var/lib/samba/private/named.conf\";" /etc/bind/named.conf) = "" ]] ; then
             echo "include \"/var/lib/samba/private/named.conf\";" >>/etc/bind/named.conf
         fi
 
         # named.conf.options
         echo -e "${cInfo}Настройка файла ${cBlue}/etc/bind/named.conf.options\n${cInfo}Добавляются строки:\n${cText}        tkey-gssapi-keytab \"/var/lib/samba/private/dns.keytab\";\n        forwarders {\n            ${FORWARDDNS};\n        };\n${cNormal}"
-        if [[ $(grep "tkey-gssapi-keytab \"/var/lib/samba/private/dns.keytab\";" /etc/bind/named.conf.options) = "" ]]; then
+        if [[ $(grep "tkey-gssapi-keytab \"/var/lib/samba/private/dns.keytab\";" /etc/bind/named.conf.options) = "" ]] ; then
             cp /etc/bind/named.conf.options{,.old}
             sed -i -e "/^};.*/s/^};/        tkey-gssapi-keytab \"\/var\/lib\/samba\/private\/dns\.keytab\";\n        forwarders {\n            ${FORWARDDNS};\n        };\n};\n/" /etc/bind/named.conf.options
         fi
@@ -629,11 +629,11 @@ mainProc() {
         echo $PATHFILESO
         echo $FILESO
 
-        if [[ "${PATHFILESO}" != "" ]]; then
+        if [[ "${PATHFILESO}" != "" ]] ; then
             if [ ! -f /var/lib/samba/private/named.conf ] ; then
             echo -e "dlz \"AD DNS Zone\" {\ndatabase \"dlopen ${PATHFILESO}\";\n};\n" > /var/lib/samba/private/named.conf
             fi
-            if [[ $(cat /var/lib/samba/private/named.conf | grep "${PATHFILESO}") = "" ]]; then
+            if [[ $(cat /var/lib/samba/private/named.conf | grep "${PATHFILESO}") = "" ]] ; then
                 echo -e "dlz \"AD DNS Zone\" {\ndatabase \"dlopen ${PATHFILESO}\";\n};\n" > /var/lib/samba/private/named.conf
             fi
         else
@@ -646,26 +646,26 @@ mainProc() {
         cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
         echo -e "${cInfo}Разблокировка демона Samba${cNormal}"
         systemctl unmask samba-ad-dc > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         echo -e "${cInfo}Запуск демона Samba${cNormal}"
         systemctl stop samba-ad-dc > /dev/null
         systemctl start  samba-ad-dc > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         echo -e "${cInfo}Включение демона Samba${cNormal}"
         systemctl enable samba-ad-dc > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         echo -e "${cInfo}Перезапуск сервера DNS${cNormal}"
         systemctl restart bind9 > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
@@ -676,39 +676,39 @@ mainProc() {
     doDomainConfigureAstra() {
         # named.conf
         echo -e "${cInfo}Настройка файла ${cBlue}/etc/bind/named.conf\n${cInfo}Добавление пути к файлу настроек зоны Samba:\n${cText}include \"/var/lib/samba/bind-dns/named.conf\";${cNormal}"
-        if [[ $(grep "include \"/var/lib/samba/bind-dns/named.conf\";" /etc/bind/named.conf) = "" ]]; then
+        if [[ $(grep "include \"/var/lib/samba/bind-dns/named.conf\";" /etc/bind/named.conf) = "" ]] ; then
             echo "include \"/var/lib/samba/bind-dns/named.conf\";" >>/etc/bind/named.conf
         fi
 
         # named.conf.options
         echo -e "${cInfo}Настройка файла ${cBlue}/etc/bind/named.conf.options\n${cInfo}Добавляются строки:\n${cText}        tkey-gssapi-keytab \"/var/lib/samba/private/dns.keytab\";\n        forwarders {\n            ${FORWARDDNS};\n        };\n${cNormal}"
-        if [[ $(grep "tkey-gssapi-keytab \"/var/lib/samba/private/dns.keytab\";" /etc/bind/named.conf.options) = "" ]]; then
+        if [[ $(grep "tkey-gssapi-keytab \"/var/lib/samba/private/dns.keytab\";" /etc/bind/named.conf.options) = "" ]] ; then
             cp /etc/bind/named.conf.options{,.old}
             sed -i -e "/^};.*/s/^};/        tkey-gssapi-keytab \"\/var\/lib\/samba\/private\/dns\.keytab\";\n        forwarders {\n            ${FORWARDDNS};\n        };\n};\n/" /etc/bind/named.conf.options
         fi
 
         echo -e "${cInfo}Разблокировка демона Samba${cNormal}"
         systemctl unmask samba-ad-dc > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         echo -e "${cInfo}Запуск демона Samba${cNormal}"
         systemctl stop samba-ad-dc > /dev/null
         systemctl start  samba-ad-dc > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         echo -e "${cInfo}Включение демона Samba${cNormal}"
         systemctl enable samba-ad-dc > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
         echo -e "${cInfo}Перезапуск сервера DNS${cNormal}"
         systemctl restart bind9 > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
@@ -719,7 +719,7 @@ mainProc() {
     doCheckDomain() {
         echo -e "${cInfo}Проверка уровня созданного домена${cNormal}"
         samba-tool domain level show
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
@@ -727,7 +727,7 @@ mainProc() {
         echo -e "${cInfo}Проверка настройки kerberos${cNormal}"
         echo "${ADMPASWD}" | sudo kinit Administrator
         klist
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
@@ -745,7 +745,7 @@ mainProc() {
         IPX=${IPX#*.*}
         echo -e "${cBlue}${IP3}.${IP2}.${IP1}.in-addr.arpa${cNormal}"
         samba-tool dns zonecreate ${HOSTNAME,,}.${REALM,,} ${IP3}.${IP2}.${IP1}.in-addr.arpa > /dev/null
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ] ; then
             echo -e "${cRed}Произошла ошибка${cNormal}"
             exit 1
         fi
@@ -1146,7 +1146,7 @@ ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInf
 
             local PACKAGES="ntp python3-ply bind9utils bind9 dnsutils fly-admin-ad-server fly-admin-ad-client libnss-winbind libpam-winbind krb5-kdc krb5-admin-server samba smbclient lshw"
 
-            if [ "$AUTODHCP" == "yes"] ; then
+            if [ "$AUTODHCP" == "yes" ] ; then
                 local PACKAGES="ntp python3-ply dnsutils fly-admin-ad-client libnss-winbind libpam-winbind krb5-kdc samba smbclient lshw"
             fi
             doInstall                # Предварительная установка пакетов
