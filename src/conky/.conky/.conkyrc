@@ -1,0 +1,33 @@
+own_window yes
+own_window_class Conky
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_type override
+use_xft yes
+use_xft yes
+xftfont HandelGotD:size=9
+xftalpha 0.5
+update_interval 4.0
+total_run_times 0
+minimum_size 200 5
+maximum_width 250
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+double_buffer yes
+  
+default_color grey
+default_shade_color red
+default_outline_color grey
+alignment bottom_right
+gap_x 12
+gap_y 42
+uppercase no
+cpu_avg_samples 2
+
+TEXT
+Система ${hr 2}
+  
+# Вывод информации 
+${exec cat ~/.conky/info.txt}

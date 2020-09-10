@@ -16,7 +16,7 @@ HOSTNAME="mtv-srv-dc-0001"
 # конфликта с локальными службами (Avahi).
 REALM="TERVETMO01.LOC"
 # IP адрес хоста (Так как это контроллер домена, то используется
-AUTODHCP="no"
+AUTODHCP="yes"
 # исключительно статический адрес)
 ADDRESS="192.168.0.1"
 # Маска сети. Можно задавать количеством бит или байтами, разделёнными точкой
@@ -39,7 +39,7 @@ VPNPWD="Password"
 # Программа удалённого доступа
 ANYDESK="no"
 # Программа показа информации о компьютере
-CONKY="no"
+CONKY="yes"
 
 # ================================================
 #
@@ -979,14 +979,30 @@ mainProc() {
 
     # Функция установки программы удалённого доступа
     doAnydeskInstall() {
+        # =================================================================
+        echo -e "${cInfo}Установка программы удалённого доступа AnyDesk${cNormal}"
+        # =================================================================
+
         wget https://download.anydesk.com/linux/anydesk_6.0.1-1_amd64.deb
+        dpkg -i anydesk_6.0.1-1_amd64.deb
+        apt-get -y install --fix-broken
         dpkg -i anydesk_6.0.1-1_amd64.deb
     }
 
     # Функция установки программы отображения на рабочем столе информации о компьютере
     doConkyInstall() {
+        # =================================================================
+        echo -e "${cInfo}Установка пограммы показа информации о системе${cNormal}"
+        # =================================================================
         apt-get -y install conky-all
-        
+        extractLines "^## \.\/conky\.tar\.gz" $1
+        echo "$cRes" > ./conky.tar.gz_base64
+        base64 -d ./conky.tar.gz_base64 >./conky.tar.gz
+        rm ./conky.tar.gz_base64
+        tar -C /usr/share/scripts -xzvf conky.tar.gz > /dev/null
+        if [ "$(grep 'conky\.sh' /etc/X11/fly-dm/Xsession)" == "" ] ; then
+            sed -i "s/\(^if ! test -d \$HOME; then .*\)\(; fi$\)/\1 ; else \/bin\/bash \/usr\/share\/scripts\/conky\/conky\.sh \2/" /etc/X11/fly-dm/Xsession
+        fi
     }
 
     # Функция извлечения файлов заставки
@@ -1165,7 +1181,7 @@ ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInf
                 doAnydeskInstall     # Установка программы удалённого доступа
             fi
             if [ "$CONKY" == "yes" ] ; then
-                doConkyInstall        # Установка программы отображения на рабчем столе информации о компьютере
+                doConkyInstall $@    # Установка программы отображения на рабчем столе информации о компьютере
             fi
             doLastCheck              # Окончательная проверка
 
@@ -1218,7 +1234,7 @@ ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInf
                 doAnydeskInstall      # Установка программы удалённого доступа
             fi
             if [ "$CONKY" == "yes" ] ; then
-                doConkyInstall        # Установка программы отображения на рабчем столе информации о компьютере
+                doConkyInstall $@     # Установка программы отображения на рабчем столе информации о компьютере
             fi
             doLastCheck               # Окончательная проверка
         fi

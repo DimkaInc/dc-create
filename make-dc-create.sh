@@ -12,16 +12,20 @@ tar -czvf ../GVSMO_Zastavka.tar.gz *
 cd ..
 tar -czvf TVU1-v.1.tar.gz TVU1-v.1
 tar -czvf fly-tvu01.tar.gz fly-tvu01
+tar -czvf conky.tar.gz conky
 
 # Конвертация файлов в текст
 base64 GVSMO_Zastavka.tar.gz >GVSMO_Zastavka.tar.gz-base64
 base64 TVU1-v.1.tar.gz >TVU1-v.1.tar.gz-base64
 base64 fly-tvu01.tar.gz >fly-tvu01.tar.gz-base64
+base64 conky.tar.gz >conky.tar.gz-base64
+
 
 # Удаление ненужных файлов
 rm GVSMO_Zastavka.tar.gz
 rm TVU1-v.1.tar.gz
 rm fly-tvu01.tar.gz
+rm conky.tar.gz
 
 # Обработка шаблона для формирования результатирующего файла
 cat /dev/null >$FILE
@@ -48,4 +52,5 @@ done <template
 rm GVSMO_Zastavka.tar.gz-base64
 rm TVU1-v.1.tar.gz-base64
 rm fly-tvu01.tar.gz-base64
+rm conky.tar.gz-base64
 cd ..

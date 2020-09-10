@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Conky - System Info
+Name[ru]=Conky - Информация о системе
+Exec=/bin/bash ~/.conky/autostart.sh
