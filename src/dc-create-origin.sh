@@ -5,8 +5,8 @@
 # https://wiki.samba.org/index.php/Active_Directory_Domain_Controller
 # https://unlis.ru/?p=501
 # @author Dmitry Dobryshin Aka -+= Dimka Inc =+-
-# @date   06.11.2019
-# @version 0.0.5
+# @date   10.09.2020
+# @version 0.0.6
 #
 # ==========================================================
 # Переменные для работы
@@ -1036,7 +1036,7 @@ mainProc() {
     # lsb-core
     echo -e "
 ${cInfo}===================================================================
-Создание контроллера домена согласно руководству Samba
+Создание контроллера домена согласно руководства Samba
 ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInfo}
 и ${cUrl}https://unlis.ru/?p=501${cInfo}
 ===================================================================${cNormal}\n"
