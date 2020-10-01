@@ -1031,7 +1031,7 @@ mainProc() {
 
 
     # Список устанавливаемых пакетов
-    local PACKAGES="ntp python3-ply bind9utils bind9 dnsutils libnss-winbind libpam-winbind winbind krb5-kdc krb5-admin-server krb5-config krb5-user samba smbclient lshw"
+    local PACKAGES="ntp python3-ply bind9utils bind9 dnsutils libnss-winbind libpam-winbind winbind krb5-kdc krb5-admin-server krb5-config krb5-user samba smbclient lshw ttf-mscorefonts-installer cups* python3*"
     #local PACKAGES="ntp python3-ply bind9utils bind9 dnsutils libnss-winbind libpam-winbind krb5-kdc krb5-admin-server samba smbclient lshw"
     # lsb-core
     echo -e "
@@ -1189,10 +1189,10 @@ ${cUrl}https://wiki.samba.org/index.php/Active_Directory_Domain_Controller${cInf
     
         if [ "$LINUXNAME" = "Astra Linux CE" ] ; then
 
-            local PACKAGES="ntp python3-ply bind9utils bind9 dnsutils fly-admin-ad-server fly-admin-ad-client libnss-winbind libpam-winbind krb5-kdc krb5-admin-server samba smbclient lshw"
+            local PACKAGES="ntp python3-ply bind9utils bind9 dnsutils fly-admin-ad-server fly-admin-ad-client libnss-winbind libpam-winbind krb5-kdc krb5-admin-server samba smbclient lshw ttf-mscorefonts-installer cups* python3*"
 
             if [ "$AUTODHCP" == "yes" ] ; then
-                local PACKAGES="ntp python3-ply dnsutils fly-admin-ad-client libnss-winbind libpam-winbind krb5-kdc samba smbclient lshw"
+                local PACKAGES="ntp python3-ply dnsutils fly-admin-ad-client libnss-winbind libpam-winbind krb5-kdc samba smbclient lshw ttf-mscorefonts-installer cups* python3*"
             fi
             doInstall                # Предварительная установка пакетов
             if [ $? -ne 0 ] ; then
